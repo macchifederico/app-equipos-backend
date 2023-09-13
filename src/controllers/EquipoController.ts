@@ -24,6 +24,8 @@ class EquipoController {
         res.status(200).json({msg: 'crear equipos!'});
     }
 
+    
+
 }
 
 const equipoControler = new EquipoController();
