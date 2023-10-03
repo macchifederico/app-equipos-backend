@@ -17,8 +17,10 @@ class JugadorService {
     async createPlayer(jugador: any){
         let promedioHabilidades = 0
         const habilidadValues: number[] = Object.values(jugador.habilidades);
+        
         const sumaTotal = habilidadValues.reduce((acc : number, val : number) => acc + val, 0);
-        const promedio = sumaTotal / 200;
+        
+        const promedio = sumaTotal / habilidadValues.length;
        
         if (promedio < 1){
             promedioHabilidades = jugador.promedioHabilidades = 1;

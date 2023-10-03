@@ -22,6 +22,7 @@ class JugadorController {
     
     createPlayer(req: Request, res: Response) {
         const {jugador} = req.body;        
+        console.log(jugador);
         
         jugadorService.createPlayer(jugador) 
             .then(data => {
