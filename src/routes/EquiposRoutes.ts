@@ -9,7 +9,7 @@ class EquiposRoutes {
     }
 
     config(): void{
-        this.router.get('/', equipoControler.getTeam);
+        this.router.post('/', equipoControler.getTeam);
         this.router.post('/', equipoControler.createTeam);
     
     }

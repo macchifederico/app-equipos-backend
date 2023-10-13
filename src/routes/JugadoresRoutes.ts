@@ -10,9 +10,12 @@ class JugadoresRoutes {
     }
 
     config(): void{
-        this.router.get('/', jugadorController.getPlayers);
-        this.router.post('/', jugadorController.createPlayer);
+        this.router.post('/', jugadorController.getPlayers);
+        this.router.post('/teams', jugadorController.getTeams);
+        this.router.post('/create', jugadorController.createPlayer);
+        this.router.post('/update', jugadorController.updatePlayersByEquipoId);
     }
+    
 }
 
 const jugadoresRoutes = new JugadoresRoutes();
