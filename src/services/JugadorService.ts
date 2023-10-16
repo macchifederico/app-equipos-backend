@@ -33,7 +33,6 @@ class JugadorService {
                 id_equipo: null,
                 nombre: jugador.nombre,
                 apodo: jugador.apodo,
-                edad: jugador.edad,
                 posicion_1: jugador.posicion_1,
                 posicion_2: jugador.posicion_2,
                 img_url: jugador.img_url,
