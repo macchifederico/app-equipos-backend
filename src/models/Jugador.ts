@@ -20,9 +20,6 @@ export const Jugador = sequelize.define('jugadores', {
     apodo:{
         type: DataTypes.STRING
     },
-    edad:{
-        type: DataTypes.INTEGER
-    },
     posicion_1:{
         type: DataTypes.STRING
     },
