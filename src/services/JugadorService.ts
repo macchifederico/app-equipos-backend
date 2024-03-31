@@ -123,6 +123,24 @@ class JugadorService {
             })
         
         }
+
+    async deletePlayer(id_jugador: number, id_usuario: number){
+        try{
+            await Jugador.destroy({
+                where: {
+                    id: id_jugador,
+                    id_usuario: id_usuario
+                }
+            })
+            return {
+                status: "OK",
+            }
+        }catch (error){
+            return {
+                error: "Error al eliminar el jugador"
+            }
+        } 
+    }
 }
 
 const jugadorService = new JugadorService();

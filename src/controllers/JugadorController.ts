@@ -59,8 +59,20 @@ class JugadorController {
             })
     }
 
-    desvincularJugadores(req: Request, res: Response) {
-        console.log(req);
+    deletePlayer(req: Request, res: Response) {
+        const {id_jugador, id_usuario} = req.body;
+
+        jugadorService.deletePlayer(id_jugador, id_usuario)
+            .then(data => {
+                res.status(200).json({
+                    data: data
+                })
+            })
+            .catch(err => {
+                res.status(500).json({
+                    err: err
+                });
+            })
         
     }
 }

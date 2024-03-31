@@ -14,6 +14,7 @@ class JugadoresRoutes {
         this.router.post('/teams', jugadorController.getTeams);
         this.router.post('/create', jugadorController.createPlayer);
         this.router.post('/update', jugadorController.updatePlayersByEquipoId);
+        this.router.post('/delete', jugadorController.deletePlayer);
     }
     
 }
