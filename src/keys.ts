@@ -9,9 +9,19 @@
 
 export default {
     database: {
-        host: '192.168.0.42',
+        host: '127.0.0.1',
         user: 'root',
         password: 'fedemacchi',
         database: 'app_equipos'
     }
 }
+
+
+// export default {
+//     database: {
+//         host: '127.0.0.1',
+//         user: 'root',
+//         password: 'root',
+//         database: 'app_equipos'
+//     }
+// }
