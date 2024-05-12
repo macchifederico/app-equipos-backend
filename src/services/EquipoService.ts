@@ -14,9 +14,6 @@ class EquipoService {
         }
     
     }
-
-    async createEquipo() {
-    }
 }
 
 const equipoService = new EquipoService();

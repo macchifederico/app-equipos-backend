@@ -1,12 +1,4 @@
-// export default {
-//     database: {
-//         host: 'db4free.net',
-//         user: 'appequipos',
-//         password: '928z2k3jt6vm3lkkgyo9',
-//         database: 'app_equipos'
-//     }
-// }
-
+//conexion bd ubuntu
 export default {
     database: {
         host: '127.0.0.1',
@@ -16,7 +8,7 @@ export default {
     }
 }
 
-
+//conexion bd lenovo
 // export default {
 //     database: {
 //         host: '127.0.0.1',
