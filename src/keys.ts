@@ -2,7 +2,7 @@
 export default {
     database: {
         host: '127.0.0.1',
-        user: 'root',
+        user: 'fedemacchi',
         password: 'fedemacchi',
         database: 'app_equipos'
     }
