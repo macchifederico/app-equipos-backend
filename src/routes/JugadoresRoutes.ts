@@ -1,5 +1,7 @@
 import { Router } from "express";
 import jugadorController from "../controllers/JugadorController";
+import { validateUserId, validatePlayerCreation, validatePlayerDeletion, validateTeamUpdate } from "../middleware/validation";
+import { createPlayerLimiter, deletePlayerLimiter, updateTeamsLimiter, queryLimiter } from "../middleware/rateLimiter";
 
 class JugadoresRoutes {
 
@@ -10,11 +12,14 @@ class JugadoresRoutes {
     }
 
     config(): void{
-        this.router.post('/', jugadorController.getPlayers);
-        this.router.post('/teams', jugadorController.getTeams);
-        this.router.post('/create', jugadorController.createPlayer);
-        this.router.post('/update', jugadorController.updatePlayersByEquipoId);
-        this.router.post('/delete', jugadorController.deletePlayer);
+        // Rutas de consulta (más permisivas)
+        this.router.post('/', queryLimiter, validateUserId, jugadorController.getPlayers);
+        this.router.post('/teams', queryLimiter, validateUserId, jugadorController.getTeams);
+        
+        // Rutas de escritura (más restrictivas)
+        this.router.post('/create', createPlayerLimiter, validatePlayerCreation, jugadorController.createPlayer);
+        this.router.post('/update', updateTeamsLimiter, validateTeamUpdate, jugadorController.updatePlayersByEquipoId);
+        this.router.post('/delete', deletePlayerLimiter, validatePlayerDeletion, jugadorController.deletePlayer);
     }
     
 }

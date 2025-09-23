@@ -1,31 +1,20 @@
 import { Request, Response } from 'express';
-import equipoService from '../services/EquipoService';
 
 class EquipoController {
     
     getTeam(req: Request, res: Response) {
-        const {id_persona} = req.body;
-
-        equipoService.getEquipos(id_persona)
-            .then(data => {
-                res.status(200).json({
-                    "data": data
-                });
-            })
-            .catch(err => {
-                res.status(500).json({
-                    "error": err
-                });
-            })
+        // Método placeholder - por ahora solo devolver respuesta vacía
+        res.status(200).json({
+            msg: 'Equipos endpoint - pendiente de implementar'
+        });
     }
 
     createTeam(req: Request, res: Response) {
-        equipoService.createEquipo();
-        res.status(200).json({msg: 'crear equipos!'});
+        // Método placeholder - por ahora solo devolver respuesta vacía
+        res.status(200).json({
+            msg: 'Crear equipos endpoint - pendiente de implementar'
+        });
     }
-
-    
-
 }
 
 const equipoControler = new EquipoController();

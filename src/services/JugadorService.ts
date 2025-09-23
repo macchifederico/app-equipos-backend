@@ -1,20 +1,29 @@
 import { where } from "sequelize";
 import { Jugador } from "../models/Jugador";
+import { IJugador, IJugadorInput, IServiceResponse } from "../interfaces/Jugador";
 
 
 class JugadorService {
 
-    async getPlayers(userId: number){         
-        const players = await Jugador.findAll({
-            where: {
-                id_usuario: userId            
-            }
-        });
-        this.cleanTeams(players, userId)                  
-        return {"players": players}
+    async getPlayers(userId: number): Promise<IServiceResponse> {         
+        try {
+            const players = await Jugador.findAll({
+                where: {
+                    id_usuario: userId            
+                }
+            });
+            await this.cleanTeams(players, userId);                  
+            return {"players": players};
+        } catch (error) {
+            console.error('Error getting players:', error);
+            return {
+                error: 'Failed to retrieve players',
+                status: false
+            };
+        }
     }
     
-    async createPlayer(jugador: any){
+    async createPlayer(jugador: IJugadorInput): Promise<IServiceResponse> {
         let promedioHabilidades = 0
         const habilidadValues: number[] = Object.values(jugador.habilidades);
         const sumaTotal = habilidadValues.reduce((acc : number, val : number) => acc + val, 0);        
@@ -60,31 +69,41 @@ class JugadorService {
         
     }
 
-    async updatePlayersByEquipoId(teamOne: any, teamTwo: any){
-        teamOne.forEach(async (player: any) => {
-            await Jugador.update({
-                id_equipo: 1
-            },{
-                where: {
-                    id: player.id,
-                    id_usuario: player.id_usuario
-                }
-            })
-        })
+    async updatePlayersByEquipoId(teamOne: IJugador[], teamTwo: IJugador[]): Promise<void> {
+        try {
+            // Actualizar equipo 1
+            const teamOneUpdates = teamOne.map(player => 
+                Jugador.update({
+                    id_equipo: 1
+                }, {
+                    where: {
+                        id: player.id,
+                        id_usuario: player.id_usuario
+                    }
+                })
+            );
 
-        teamTwo.forEach(async (player: any) => {
-            await Jugador.update({
-                id_equipo: 2
-            },{
-                where: {
-                    id: player.id,
-                    id_usuario: player.id_usuario
-                }
-            })
-        })
+            // Actualizar equipo 2
+            const teamTwoUpdates = teamTwo.map(player => 
+                Jugador.update({
+                    id_equipo: 2
+                }, {
+                    where: {
+                        id: player.id,
+                        id_usuario: player.id_usuario
+                    }
+                })
+            );
+
+            // Esperar a que todas las actualizaciones se completen
+            await Promise.all([...teamOneUpdates, ...teamTwoUpdates]);
+        } catch (error) {
+            console.error('Error updating players by team ID:', error);
+            throw new Error('Failed to update teams');
+        }
     }
 
-    async getTeams(userId: number){
+    async getTeams(userId: number): Promise<IServiceResponse> {
         try {
             const teamOne = await Jugador.findAll({
                 where: {
@@ -110,21 +129,27 @@ class JugadorService {
         }
     }
 
-    async cleanTeams(players: any, userId: number){
-        players.forEach(async (player: any) => {
-                await Jugador.update({
+    async cleanTeams(players: IJugador[], userId: number): Promise<void> {
+        try {
+            const cleanUpdates = players.map(player => 
+                Jugador.update({
                     id_equipo: null
-                },{
+                }, {
                     where: {
                         id: player.id,
                         id_usuario: userId
                     }
                 })
-            })
-        
+            );
+            
+            await Promise.all(cleanUpdates);
+        } catch (error) {
+            console.error('Error cleaning teams:', error);
+            throw new Error('Failed to clean teams');
         }
+    }
 
-    async deletePlayer(id_jugador: number, id_usuario: number){
+    async deletePlayer(id_jugador: number, id_usuario: number): Promise<IServiceResponse> {
         try{
             await Jugador.destroy({
                 where: {
