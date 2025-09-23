@@ -7,8 +7,6 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { apiLimiter, devLimiter } from './middleware/rateLimiter';
 
 //Routes
-import dataRoutes from './routes/DataRoutes';
-import equiposRoutes from './routes/EquiposRoutes';
 import jugadoresRoutes from './routes/JugadoresRoutes';
 
 //Importo modelos para bbdd
@@ -48,8 +46,6 @@ class Server {
     }
 
     routes(): void{
-        this.app.use('/api', dataRoutes);
-        this.app.use('/api/equipos', equiposRoutes);
         this.app.use('/api/jugadores', jugadoresRoutes);
         
         // 404 handler
